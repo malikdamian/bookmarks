@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}Logowanie{% endblock %}
+
+{% block content %}
+
+    <div class="text-center">
+        <h2>Logowanie</h2>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <p>Nie masz konta? Załóż je: <a href="#">tutaj</a></p>
+            <button type="submit" class="btn btn-success">Zaloguj</button>
+
+        </form>
+    </div>
+
+
+{% endblock %}
