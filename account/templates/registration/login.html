@@ -10,7 +10,7 @@
             <br>
         </div>
 
-        <form method="post" action="{% url 'account:login' %}">
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             {{ form|crispy }}
             <p>Nie masz konta? Załóż je: <a href="#">tutaj</a></p>

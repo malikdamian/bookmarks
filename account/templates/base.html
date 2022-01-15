@@ -14,7 +14,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'account:dashboard' %}">Container</a>
+        <a class="navbar-brand" href="{% url 'dashboard' %}">Container</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
                 aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
             {% if user.is_authenticated %}
                 <ul class="navbar-nav mr-auto">
                     <li {% if section == "dashboard" %} class="nav-item active"{% endif %} >
-                        <a class="nav-link" href="{% url 'account:dashboard' %}">Główna</a>
+                        <a class="nav-link" href="{% url 'dashboard' %}">Główna</a>
                     </li>
 
                     <li {% if section == "images" %} class="nav-item active"{% endif %}>
@@ -60,9 +60,9 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="{% url 'account:logout' %}">Wyloguj</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Wyloguj</a></li>
                     {% else %}
-                        <li><a class="dropdown-item" href="{% url 'account:login' %}">Zaloguj się</a></li>
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Zaloguj się</a></li>
                         <li><a class="dropdown-item" href="#">Rejestracja</a></li>
 
                     {% endif %}
