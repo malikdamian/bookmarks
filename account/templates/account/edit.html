@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}Edycja konta{% endblock %}
+
+{% block content %}
+    <div class="container w-25 p-3">
+        <h1>Edycja konta</h1>
+        <br>
+        <p>Ustawienia możesz zmienić za pomocą poniższego formularza:</p>
+        <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
+            <button type="submit" class="btn btn-success">Zapisz</button>
+        </form>
+    </div>
+
+{% endblock %}
