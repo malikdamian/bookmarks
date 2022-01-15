@@ -15,6 +15,7 @@
             {{ form|crispy }}
             <p>Nie masz konta? Załóż je: <a href="#">tutaj</a></p>
             <input type="hidden" name="next" value="{{ next }}"/>
+            <p><a href="{% url 'password_reset' %}">Nie pamietam hasła.</a> </p>
             <button type="submit" class="btn btn-success">Zaloguj</button>
         </form>
     </div>
