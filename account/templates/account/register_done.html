@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Witaj {{ new_user.first_name }}{% endblock %}
+
+{% block content %}
+    <div class="container  w-25 p-3">
+        <h1>Witaj {% if new_user.first_name %}{{ new_user.first_name }}{% else %}{{ new_user }}{% endif %}!</h1>
+        <br>
+        <p>Twoje konto zostało utworzone poprawnie.
+            Możesz się <a href="{% url 'login' %}">zalogować</a>.</p>
+    </div>
+
+{% endblock %}
