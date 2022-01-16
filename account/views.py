@@ -58,10 +58,12 @@ def edit(request):
         user_form = UserEditForm(data=request.POST, instance=request.user)
         profile_form = ProfileEditForm(request.POST, request.FILES,
                                        instance=request.user.profile)
-
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, 'Profil został pomyślnie zaktualizowany')
+        else:
+            messages.error(request, 'Błąd aktualizacji profilu')
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
