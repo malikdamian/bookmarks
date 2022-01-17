@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'social_django',
     'django_extensions'
 
-
 ]
 
 MIDDLEWARE = [
@@ -68,6 +67,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -133,11 +135,23 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
+
     'django.contrib.auth.backends.ModelBackend',
-    'account.authentication.EmailAuthBackend'
+    'account.authentication.EmailAuthBackend',
 ]
+
+SOCIAL_AUTH_FACEBOOK_KEY = config('FACEBOOK_ID')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('FACEBOOK_SECRET_KEY')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_TWITTER_KEY = config('TWITTER_ID')
+SOCIAL_AUTH_TWITTER_SECRET = config('TWITTER_SECRET_KEY')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_SECRET_KEY')

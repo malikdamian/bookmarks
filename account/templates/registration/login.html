@@ -1,24 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_filters %}
-
+{% block style %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'css/social.css' %}" rel="stylesheet">
+{% endblock %}
 {% block title %}Logowanie{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="text-center">
-            <h1>Logowanie</h1>
-            <br>
-        </div>
+    <div class="container w-50 p-3">
 
+        <h1>Logowanie</h1>
+        <br>
         <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <p>Nie masz konta? Załóż je: <a href="#">tutaj</a></p>
-            <input type="hidden" name="next" value="{{ next }}"/>
-            <p><a href="{% url 'password_reset' %}">Nie pamietam hasła.</a> </p>
-            <button type="submit" class="btn btn-success">Zaloguj</button>
+            <div class="form-row">
+                {% csrf_token %}
+                <div class="col">
+                    {{ form|crispy }}
+
+                    <p>Nie masz konta? Załóż je: <a href="{% url 'register' %}">tutaj</a></p>
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    <p><a href="{% url 'password_reset' %}">Nie pamietam hasła.</a></p>
+                    <button type="submit" class="btn btn-success">Zaloguj</button>
+                </div>
+                <div class="col">
+                <div class="social">
+                    <a class="btn btn-block btn-social btn-facebook" href="{% url "social:begin" "facebook" %}">
+                        <span class="fa fa-facebook"></span>
+                        Zaloguj się za pomocą Facebook
+                    </a>
+
+                    <a class="btn btn-block btn-social btn-twitter" href="{% url "social:begin" "twitter" %}">
+                        <span class="fa fa-twitter"></span>
+                        Zaloguj się za pomocą Twitter
+                    </a>
+
+                    <a class="btn btn-block btn-social btn-google" href="{% url "social:begin" "google-oauth2" %}">
+                        <span class="fa fa-google"></span>
+                        Zaloguj się za pomocą Google+
+                    </a>
+                    </div>
+                </div>
+            </div>
         </form>
+
+
     </div>
-
-
 {% endblock %}
