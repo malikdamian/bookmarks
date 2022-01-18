@@ -40,7 +40,9 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'social_django',
-    'django_extensions'
+    'django_extensions',
+
+    'images.apps.ImagesConfig',
 
 ]
 
