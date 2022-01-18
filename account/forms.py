@@ -1,13 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import NumberInput
 
 from account.models import Profile
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -29,9 +23,6 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
-        # widgets = {
-        #     'email': forms.EmailInput
-        # }
 
 
 class ProfileEditForm(forms.ModelForm):
