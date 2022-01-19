@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}Dodaj obraz{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Dodaj obraz</h1>
+        <hr>
+        <div class="form-row">
+            <div class="col">
+                <img src="{{ request.GET.url }}" alt="" width="370" height="450">
+            </div>
+            <div class="col">
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="submit" value="Dodaj" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
