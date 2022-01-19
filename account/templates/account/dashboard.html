@@ -7,9 +7,21 @@
     <div class="container">
         <h1>Strona głowna</h1>
         <hr>
-        <p>Witaj na stronie głownej. Możesz
-        <a href="{% url 'edit' %}">edytować profil </a> lub
-        <a href="{% url 'password_change' %}">zmienić hasło</a>.
-        </p>
+
+        {% with  total_images_created=request.user.images_created.count %}
+            <p>Witaj na stronie głownej. Dodałeś {{ total_images_created }}
+                obraz{{ total_images_created|pluralize:'ów' }}.</p>
+        {% endwith %}
+
+        <p>Przeciągnij poniższy przycisk na pasek ulubionych.
+            Zyskasz możliwość dodwania obrazków z innych witryn internetowych
+            <i class="fas fa-arrow-right"></i>
+            <a href="javascript:{% include 'bookmarklet_launcher.js' %}"
+               class="btn btn-info  btn-sm">Dodaj obraz</a></p>
+
+
+        <p>Możesz <a href="{% url 'edit' %}">edytować profil </a> lub
+            <a href="{% url 'password_change' %}">zmienić hasło</a>.</p>
+
     </div>
 {% endblock %}
