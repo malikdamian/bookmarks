@@ -14,15 +14,36 @@
                 </a>
             </div>
             <div class="col">
-                {% with total_likes=image.users_like.count %}
-                    <button class="btn btn-outline-info rounded-pill">{{ total_likes }} polubień</button>
+                {% with total_likes=image.users_like.count users_like=image.users_like.all %}
 
+                    <div class="btn btn-outline-info rounded-pill like">
+
+                            <span class="count">
+                              <span class="total">{{ total_likes }} </span>
+
+                            </span>
+
+                        <a href="#" data-id="{{ image.id }}"
+                           data-action="{% if request.user in users_like %}un{% endif %}like"
+                           class="like button">
+                            {% if request.user not in users_like %}
+                                Lubię
+                            {% else %}
+                                Nie lubię
+                            {% endif %}
+                        </a>
+
+
+                    </div>
                     <p>{{ image.description|linebreaks }}</p>
 
 
+                    {% for user in users_like %}
 
-                    {% for user in image.users_like.all %}
-                        <img src="{{ user.profile.photo.url }}" alt="user-image">
+                        {% if user.profile.photo %}
+                            <img src="{{ user.profile.photo.url }}" alt="user-image">
+                        {% endif %}
+
                         <p>{{ user.first_name }}</p>
                     {% empty %}
                         Jeszcze nikt nie polubił tego obrazu.
@@ -31,5 +52,33 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block domready %}
+  $('a.like').click(function(e){
+    e.preventDefault();
+    $.post('{% url "images:like" %}',
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+      },
+      function(data){
+        if (data['status'] == 'ok')
+        {
+          var previous_action = $('a.like').data('action');
+
+          $('a.like').data('action', previous_action == 'like' ?
+          'unlike' : 'like');
+
+          $('a.like').text(previous_action == 'like' ? 'Nie lubię' :
+          'Lubię');
+
+          var previous_likes = parseInt($('span.count .total').text());
+          $('span.count .total').text(previous_action == 'like' ?
+          previous_likes + 1 : previous_likes - 1);
+        }
+      }
+    );
+  });
 
 {% endblock %}

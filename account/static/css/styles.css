@@ -6,3 +6,24 @@
     color: white;
     text-decoration: none;
 }
+
+.icon:hover {
+    color: pink;
+}
+
+
+.like button:hover {
+    color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.like:hover {
+    color: white;
+}
+
+.like {
+    color: #17a2b8;
+}
