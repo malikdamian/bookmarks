@@ -23,10 +23,15 @@ class ImageCreateForm(forms.ModelForm):
                                         obrazów w obsługiwanym formacie')
         return url
 
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        return title.split('.')[0].replace('_', ' ')
+
     def save(self, force_insert=False, force_update=False, commit=True):
-        image = super(ImageCreateForm, self).save(commit=False)
+        image = super().save(commit=False)
         image_url = self.cleaned_data['url']
-        name = slugify(image.title)
+        title = image.title.split('.')[0].replace('_', ' ')
+        name = slugify(title)
         extension = image_url.rsplit(".", 1)[1].lower()
         image_name = f'{name}.{extension}'
 
