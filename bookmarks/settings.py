@@ -14,6 +14,8 @@ from pathlib import Path
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -158,3 +160,9 @@ SOCIAL_AUTH_TWITTER_SECRET = config('TWITTER_SECRET_KEY')
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_ID')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_SECRET_KEY')
+
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail',
+                                        args=[u.username])
+}

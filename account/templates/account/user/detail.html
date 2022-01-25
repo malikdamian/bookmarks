@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load static %}
+
+<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+{% block title %}{{ user.get_full_name }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <h1>{{ user.get_full_name }}</h1>
+        <hr>
+
+        <div class="form-row">
+            <img src="{% thumbnail user.profile.photo '200x200' crop='100%' %}" alt="photo" class="rounded-circle">
+
+
+            <div class="col">
+                {% with total_followers=user.followers.count %}
+
+                    <span class="count_f">
+                    <span class="total">{{ total_followers }}</span>
+                        obserwujący{{ total_followers|pluralize:'ch' }}</span>
+                    </div>
+
+                    <div class="col text-right">
+                    <a href="#" data-id="{{ user.id }}"
+                       data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
+                       class="btn btn-outline-success">
+                        {% if request.user not in user.followers.all %}
+                            Obserwuj
+                        {% else %}
+                            Nie obserwuj
+                        {% endif %}
+                    </a>
+                {% endwith %}
+                </div>
+        </div>
+        <br>
+
+        <div id="image-list">
+            {% include "images/image/list_ajax.html" with images=user.images_created.all %}
+        </div>
+
+    </div>
+
+{% endblock %}
