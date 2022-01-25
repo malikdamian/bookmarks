@@ -39,14 +39,15 @@
 
 
                     {% for user in users_like %}
-
+                        <div class="text-center">
                         {% if user.profile.photo %}
-                            <img src="{{ user.profile.photo.url }}" alt="user-image">
+                            <img src="{% thumbnail user.profile.photo '140x140' crop='center' %}" alt="user-image"  class="rounded-circle">
                         {% endif %}
 
                         <p>{{ user.first_name }}</p>
                     {% empty %}
                         Jeszcze nikt nie polubił tego obrazu.
+                        </div>
                     {% endfor %}
                 {% endwith %}
             </div>
