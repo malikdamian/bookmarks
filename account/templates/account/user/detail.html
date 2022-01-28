@@ -13,8 +13,11 @@
         <hr>
 
         <div class="form-row">
+        {% if user.profile.photo %}
             <img src="{% thumbnail user.profile.photo '200x200' crop='100%' %}" alt="photo" class="rounded-circle">
-
+        {% else %}
+            <img src="https://via.placeholder.com/150" class="rounded-circle" alt="photo">
+        {% endif %}
 
             <div class="col">
                 {% with total_followers=user.followers.count %}
@@ -27,11 +30,11 @@
                     <div class="col text-right">
                     <a href="#" data-id="{{ user.id }}"
                        data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
-                       class="btn btn-outline-success">
+                       class="btn btn-outline-success follow button">
                         {% if request.user not in user.followers.all %}
                             Obserwuj
                         {% else %}
-                            Nie obserwuj
+                           Nie obserwuj
                         {% endif %}
                     </a>
                 {% endwith %}
@@ -39,10 +42,36 @@
         </div>
         <br>
 
-        <div id="image-list">
+        <div id="image-list" class="image-container">
             {% include "images/image/list_ajax.html" with images=user.images_created.all %}
         </div>
-
     </div>
 
+
+
+{% endblock %}
+
+{% block domready %}
+  $('a.follow').click(function(e){
+    e.preventDefault();
+    $.post('{% url "user_follow" %}',
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+      },
+      function(data){
+        if (data['status'] == 'ok') {
+          var previous_action = $('a.follow').data('action');
+          $('a.follow').data('action',
+            previous_action == 'follow' ? 'unfollow' : 'follow');
+          $('a.follow').text(
+            previous_action == 'follow' ? 'Nie obserwuj' : 'Obserwuj');
+          var previous_followers = parseInt(
+            $('span.count_f .total').text());
+          $('span.count_f .total').text(previous_action == 'follow' ?
+          previous_followers + 1 : previous_followers - 1);
+        }
+      }
+    );
+  });
 {% endblock %}
