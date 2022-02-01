@@ -36,7 +36,7 @@ def register(request):
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
             Profile.objects.create(user=new_user)
-            create_action(new_user, 'has created an account')
+            create_action(new_user, 'utworzył konto')
             return render(request, 'account/register_done.html', {'new_user': new_user})
     else:
         form = UserRegistrationForm()
@@ -89,10 +89,10 @@ def user_follow(request):
                 Contact.objects.get_or_create(
                     user_from=request.user,
                     user_to=user)
+                create_action(request.user, 'obserwuje', user)
             else:
                 Contact.objects.filter(user_from=request.user,
                                        user_to=user).delete()
-                create_action(request.user, 'is following', user)
             return JsonResponse({'status': 'ok'})
         except User.DoesNotExist:
             return JsonResponse({'status': 'error'})
