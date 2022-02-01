@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
-from common.decorators import ajax_required
+from common.decorators import ajax_required, is_ajax
 from images.forms import ImageCreateForm
 from images.models import Image
 from actions.utils import create_action
@@ -68,7 +68,7 @@ def image_list(request):
         if request.is_ajax():
             return HttpResponse('')
         images = paginator.page(paginator.num_pages)
-    if request.is_ajax():
+    if is_ajax(request):
         return render(request,
                       'images/image/list_ajax.html',
                       {'section': 'images', 'images': images})
