@@ -21,7 +21,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarsExample07">
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
                 <ul class="navbar-nav mr-auto">
                     <li {% if section == "dashboard" %} class="nav-item active"{% endif %} >
                         <a class="nav-link" href="{% url 'dashboard' %}">Główna</a>
@@ -35,9 +35,9 @@
                     </li>
                 </ul>
             {% endif %}
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated %}
                 <div class="text-light">
-                    Witaj {% if user.first_name %}{{ user.first_name }}{% else %}{{ user }}{% endif %}!
+                    Witaj {{ request.user.first_name|default:request.user.username }}
                 </div>
             {% endif %}
 
@@ -50,7 +50,7 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                    {% if user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                         <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -95,9 +95,17 @@
         crossorigin="anonymous"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+
 <script>
-    var csrftoken = Cookies.get('csrftoken');
+    $(document).ready(function () {
+        {% block domready %}
+        {% endblock %}
+    });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+    const csrftoken = Cookies.get('csrftoken');
 
     function csrfSafeMethod(method) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -110,12 +118,6 @@
             }
         }
     });
-    $(document).ready(function () {
-        {% block domready %}
-        {% endblock %}
-    });
 </script>
-
 </body>
-
 </html>
