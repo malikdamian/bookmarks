@@ -18,7 +18,8 @@ class Action(models.Model):
                                             blank=True,
                                             db_index=True)
     target = GenericForeignKey('target_ct', 'target_id')
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True,
+                                   db_index=True)
 
     class Meta:
         ordering = ('-created',)
