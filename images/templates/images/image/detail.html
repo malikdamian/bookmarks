@@ -23,6 +23,7 @@
 
                             </span>
 
+
                         <a href="#" data-id="{{ image.id }}"
                            data-action="{% if request.user in users_like %}un{% endif %}like"
                            class="like button">
@@ -33,8 +34,11 @@
                             {% endif %}
                         </a>
 
-
                     </div>
+
+                         <span class="count_f">
+                                <span class="total">{{ total_views }}</span> wyświetleń
+                             </span>
                     <p>{{ image.description|linebreaks }}</p>
 
 
